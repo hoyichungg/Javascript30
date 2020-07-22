@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Understanding JavaScript's Capture</title>
+</head>
+
+<body class="bod">
+
+    <div class="one">
+        This is div 1
+        <div class="two">
+            This is div 2
+            <div class="three">
+                This is div 3
+            </div>
+        </div>
+    </div>
+
+    <style>
+        html {
+            box-sizing: border-box;
+        }
+
+        *,
+        *:before,
+        *:after {
+            box-sizing: inherit;
+        }
+
+        div {
+            width: 100%;
+            padding: 100px;
+        }
+
+        .one {
+            background: thistle;
+        }
+
+        .two {
+            background: mistyrose;
+        }
+
+        .three {
+            background: coral;
+        }
+
+        button {
+            width: 10%;
+            margin: 10px auto;
+            background: lightblue;
+        }
+    </style>
+
+    <button>Click Me !!</button>
+    <script>
+        const divs = document.querySelectorAll('div');
+        const button = document.querySelector('button')
+
+        function logText(e) {
+            console.log(this.classList.value);
+            e.stopPropagation // stop bubbling/capture!
+        }
+
+        divs.forEach(div => div.addEventListener('click', logText, {
+            capture: false, //capture:ture Bubbling
+            once: true //效果等同於removeEventListener() 
+        }));
+
+        button.addEventListener('click', () => {
+            console.log('Click!!!');
+        }, {
+            once: true
+        });
+
+    </script>
+</body>
+
+</html>
